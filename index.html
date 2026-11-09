@@ -318,6 +318,93 @@
     .lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
 
     /* ---------- Process ---------- */
+    /* ---------- Plugin ---------- */
+    .plugin-band {
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(56,189,248,.10), transparent 60%),
+        linear-gradient(180deg, #081b2b, #071622);
+      border-top: 1px solid var(--border);
+    }
+    nav a.nav-plugin { color: var(--accent-cyan); }
+    .plugin-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 0 auto 36px; max-width: 900px;
+      background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .plugin-stats div { background: var(--bg-surface); padding: 16px; text-align: center; }
+    .plugin-stats strong { display: block; font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1.2; }
+    .plugin-stats span { font-family: var(--mono); font-size: .72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+    .ribbon {
+      background: #0b2135; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0,0,0,.45); margin-bottom: 40px;
+    }
+    .ribbon-top { display: flex; align-items: center; gap: 14px; background: #061624; border-bottom: 1px solid var(--border); padding: 0 12px; }
+    .ribbon-dots { display: flex; gap: 6px; }
+    .ribbon-dots i { width: 10px; height: 10px; border-radius: 50%; background: #1e3a52; }
+    .ribbon-tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
+    .ribbon-tabs button {
+      background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-muted);
+      padding: 12px 16px; font-family: var(--mono); font-size: .82rem; cursor: pointer; white-space: nowrap;
+    }
+    .ribbon-tabs button:hover { color: #fff; }
+    .ribbon-tabs button.active { color: var(--accent-cyan); border-bottom-color: var(--accent-cyan); background: #0b2135; }
+    .ribbon-body { display: flex; overflow-x: auto; padding: 14px 6px 0; min-height: 150px; }
+    .r-panel { display: flex; flex-direction: column; border-right: 1px solid var(--border-soft); padding: 0 8px; animation: tileIn .3s ease both; }
+    .r-panel:last-child { border-right: none; }
+    .r-btns { display: flex; gap: 4px; flex: 1; }
+    .r-btn {
+      width: 86px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+      padding: 8px 4px; border-radius: 6px; transition: background .2s; cursor: default;
+    }
+    .r-btn:hover { background: rgba(56,189,248,.10); }
+    .r-btn img { width: 36px; height: 36px; object-fit: contain; }
+    .r-btn span { font-size: .72rem; line-height: 1.25; color: var(--text-main); }
+    .r-panel-name {
+      text-align: center; font-family: var(--mono); font-size: .68rem; color: var(--text-dim);
+      padding: 8px 0; margin-top: 6px; border-top: 1px solid var(--border-soft);
+    }
+    .ribbon-desc { padding: 12px 18px; border-top: 1px solid var(--border); background: #071a2a; color: var(--text-muted); font-size: .88rem; }
+    .ribbon-desc b { color: var(--accent-cyan); font-family: var(--mono); font-weight: 700; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .feature {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 26px;
+      transition: border-color .3s, transform .3s;
+    }
+    .feature:hover { border-color: var(--accent-cyan); transform: translateY(-3px); }
+    .feature.featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #0f3150 0%, #0b2338 60%, #0a1f30 100%);
+      border-color: rgba(56,189,248,.5);
+    }
+    .feature-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .feature-icon {
+      width: 54px; height: 54px; flex-shrink: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      background: rgba(56,189,248,.10); border: 1px solid rgba(56,189,248,.35);
+    }
+    .feature-icon img { width: 32px; height: 32px; object-fit: contain; }
+    .feature h3 { font-size: 1.2rem; line-height: 1.3; margin-top: 2px; }
+    .feature.featured h3 { font-size: 1.5rem; }
+    .feature p { color: var(--text-muted); font-size: .95rem; margin-bottom: 14px; }
+    .feature-list { list-style: none; display: grid; gap: 7px; }
+    .feature-list.two-col { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+    .feature-list li { font-size: .88rem; padding-left: 20px; position: relative; color: var(--text-main); }
+    .feature-list li::before { content: "▸"; position: absolute; left: 2px; color: var(--accent-cyan); }
+
+    .advantages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 40px 0; }
+    .advantages div { border-left: 2px solid var(--accent-cyan); padding: 4px 0 4px 16px; }
+    .advantages h4 { font-size: 1rem; margin-bottom: 4px; }
+    .advantages p { color: var(--text-muted); font-size: .88rem; }
+
+    .plugin-cta {
+      display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+      background: var(--bg-deep); border: 1px solid var(--accent-cyan); border-radius: 12px; padding: 24px 28px;
+    }
+    .plugin-cta h3 { font-size: 1.25rem; margin-bottom: 4px; }
+    .plugin-cta p { color: var(--text-muted); font-size: .92rem; }
+    .plugin-cta .req { font-family: var(--mono); font-size: .75rem; color: var(--text-dim); display: block; margin-top: 4px; }
+    .plugin-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
     .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; }
     .step { border-top: 2px solid var(--border); padding-top: 18px; }
     .step:hover { border-top-color: var(--accent-cyan); }
@@ -411,13 +498,18 @@
 
     /* ---------- Responsive ---------- */
     @media (max-width: 960px) {
+      .advantages { grid-template-columns: 1fr 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
       .hero { grid-template-columns: 1fr; padding-top: 120px; }
       .doc-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr 1fr; }
       .nav-actions .btn-ghost { display: none; }
       .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
     }
-    @media (max-width: 1100px) { nav ul { gap: 18px; } }
+    nav a { white-space: nowrap; }
+    .brand-logo { flex-shrink: 0; }
+    @media (max-width: 1440px) { .nav-actions .btn-ghost { display: none; } }
+    @media (max-width: 1100px) { nav ul { gap: 16px; } .brand-tag { display: none; } }
     @media (max-width: 768px) {
       .menu-toggle { display: inline-flex; }
       nav {
@@ -441,6 +533,10 @@
     }
     @media (max-width: 520px) {
       .steps { grid-template-columns: 1fr; }
+      .plugin-stats { grid-template-columns: 1fr 1fr; }
+      .advantages { grid-template-columns: 1fr; }
+      .feature-list.two-col { grid-template-columns: 1fr; }
+      .feature { padding: 20px; }
       .gallery { grid-template-columns: 1fr; grid-auto-rows: 210px; }
       .tile.wide, .tile.big { grid-column: auto; grid-row: auto; }
       .lightbox { padding: 56px 8px 80px; }
@@ -483,7 +579,8 @@
       <nav id="mainNav">
         <ul>
           <li><a href="#solucoes">Soluções</a></li>
-          <li><a href="#comparador">Renders & 3D</a></li>
+          <li><a href="#plugin" class="nav-plugin">Plugin</a></li>
+          <li><a href="#comparador">Renders</a></li>
           <li><a href="#portfolio">Portfólio</a></li>
           <li><a href="#documentacao">Documentação</a></li>
           <li><a href="#processo">Processo</a></li>
@@ -603,11 +700,147 @@
       </div>
     </section>
 
+    <!-- ================= PLUGIN ================= -->
+    <section class="plugin-band" id="plugin">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">[ 02 · REREVIT PLUGIN ]</span>
+          <h2>ReRevit Plugin para Revit</h2>
+          <p>Um conjunto de ferramentas criado por engenheiros para eliminar o trabalho repetitivo em projetos elétricos, de sistemas, SPDA e arquitetura — direto na faixa de opções do Revit.</p>
+        </div>
+
+        <div class="plugin-stats">
+          <div><strong>215</strong><span>ferramentas</span></div>
+          <div><strong>23</strong><span>painéis</span></div>
+          <div><strong>5</strong><span>abas no Revit</span></div>
+          <div><strong>1 clique</strong><span>para preparar o projeto</span></div>
+        </div>
+
+        <!-- Ribbon interativo -->
+        <div class="ribbon" aria-label="Abas do ReRevit Plugin no Revit">
+          <div class="ribbon-top">
+            <span class="ribbon-dots"><i></i><i></i><i></i></span>
+            <div class="ribbon-tabs" role="tablist" id="ribbonTabs"></div>
+          </div>
+          <div class="ribbon-body" id="ribbonBody"></div>
+          <div class="ribbon-desc" id="ribbonDesc"></div>
+        </div>
+
+        <!-- Funcionalidades -->
+        <div class="feature-grid">
+          <article class="feature featured">
+            <div class="feature-head">
+              <span class="feature-icon"><img src="assets/plugin/preparar-projeto.png" alt=""></span>
+              <div>
+                <span class="label-mono">Re.Auto · Preparar Projeto</span>
+                <h3>Prepare seu Projeto com 1 Clique</h3>
+              </div>
+            </div>
+            <p>Níveis, faixas de vista, recortes, folhas, carimbos e mais — o arquivo pronto para modelar a partir de um único formulário.</p>
+            <ul class="feature-list two-col">
+              <li>Vínculos com autovinculação de níveis</li>
+              <li>Níveis e ambientes criados e editados</li>
+              <li>Vistas por disciplina: tomadas, iluminação, TI, segurança, SPDA</li>
+              <li>Caixa de recorte já ajustada ao vínculo</li>
+              <li>Vistas de anotação, corte e cotas por nível</li>
+              <li>Folhas e carimbos com dados do projeto</li>
+            </ul>
+          </article>
+
+          <article class="feature">
+            <div class="feature-head">
+              <span class="feature-icon"><img src="assets/plugin/auto-cotas.png" alt=""></span>
+              <div>
+                <span class="label-mono">Re.Doc · Re.Ele</span>
+                <h3>Automatização Completa</h3>
+              </div>
+            </div>
+            <p>Cotas, folhas, tags e tubulações geradas e posicionadas automaticamente.</p>
+            <ul class="feature-list">
+              <li>Auto cotas com referência e em pontos elétricos</li>
+              <li>Criação, ajuste e repopulação de folhas</li>
+              <li>Posicionamento de tags padronizadas</li>
+              <li>Eletrodutos e eletrocalhas em lote</li>
+            </ul>
+          </article>
+
+          <article class="feature">
+            <div class="feature-head">
+              <span class="feature-icon"><img src="assets/plugin/pontos-objeto.png" alt=""></span>
+              <div>
+                <span class="label-mono">Re.Auto · Automático</span>
+                <h3>Reconhecimento e Posicionamento de Pontos</h3>
+              </div>
+            </div>
+            <p>O plugin lê ambientes e mobiliário e posiciona os pontos elétricos, de dados e de segurança nos lugares certos.</p>
+            <ul class="feature-list">
+              <li>Pontos por objeto e por ambiente</li>
+              <li>Vínculo com os móveis do projeto</li>
+              <li>Iluminação, emergência, CFTV e SPDA por etapas</li>
+            </ul>
+          </article>
+
+          <article class="feature">
+            <div class="feature-head">
+              <span class="feature-icon"><img src="assets/plugin/db-ambientes.png" alt=""></span>
+              <div>
+                <span class="label-mono">Re.Config · Banco de Dados</span>
+                <h3>Database Expansiva entre Projetos</h3>
+              </div>
+            </div>
+            <p>Ambientes, móveis e regras de pontos ficam num banco de dados que cresce a cada projeto e é reaproveitado no próximo.</p>
+            <ul class="feature-list">
+              <li>Ambientes e móveis padrão</li>
+              <li>Cadastro de novos pontos automáticos</li>
+              <li>Backup do banco e modelo de projeto</li>
+            </ul>
+          </article>
+
+          <article class="feature">
+            <div class="feature-head">
+              <span class="feature-icon"><img src="assets/plugin/padroes.png" alt=""></span>
+              <div>
+                <span class="label-mono">Re.Config · Padrões</span>
+                <h3>Formulários Personalizados</h3>
+              </div>
+            </div>
+            <p>Informações centralizadas: dados do projeto, da empresa, do cliente e padrões técnicos editados em um só lugar e aplicados em todo o modelo.</p>
+            <ul class="feature-list">
+              <li>Projeto, empresa e cliente</li>
+              <li>Padrões elétricos, de sistemas e SPDA</li>
+              <li>Tags e parâmetros padronizados</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Vantagens -->
+        <div class="advantages">
+          <div><h4>Menos retrabalho</h4><p>Tarefas repetitivas de horas viram um formulário e um clique.</p></div>
+          <div><h4>Padrão em todo projeto</h4><p>As mesmas tags, folhas e carimbos, sempre — sem depender de quem modela.</p></div>
+          <div><h4>Pensado para o Brasil</h4><p>Fluxos de tomadas, TI, segurança e SPDA no jeito brasileiro de projetar.</p></div>
+          <div><h4>Evolui com você</h4><p>O banco de dados cresce a cada projeto e acelera o próximo.</p></div>
+        </div>
+
+        <div class="plugin-cta">
+          <div>
+            <h3>Quer ver o ReRevit Plugin em ação?</h3>
+            <p>Agende uma demonstração ou peça informações sobre licença. <span class="req">Requer Autodesk Revit + pyRevit.</span></p>
+          </div>
+          <div class="plugin-cta-actions">
+            <a href="#contato" class="btn btn-primary" data-tab="orcamento" data-service="ReRevit Plugin (demonstração / licença)">Solicitar Demonstração</a>
+            <a class="btn btn-wa" style="width:auto; padding:12px 20px;" target="_blank" rel="noopener" data-wa="wa2" data-msg="Olá, gostaria de saber mais sobre o ReRevit Plugin.">
+              <svg class="icon"><use href="#i-chat"/></svg> WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= COMPARADOR ================= -->
     <section class="band" id="comparador">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">[ 02 · VISUALIZAÇÃO ]</span>
+          <span class="eyebrow">[ 03 · VISUALIZAÇÃO ]</span>
           <h2>Do Modelo Bruto ao Render Final</h2>
           <p>Arraste a linha central para comparar a geometria do modelo (clay + wireframe) com o render final texturizado.</p>
         </div>
@@ -645,7 +878,7 @@
     <!-- ================= PORTFÓLIO ================= -->
     <section class="container" id="portfolio">
       <div class="section-title">
-        <span class="eyebrow">[ 03 · PORTFÓLIO ]</span>
+        <span class="eyebrow">[ 04 · PORTFÓLIO ]</span>
         <h2>Galeria de Projetos & Visualizações</h2>
         <p>Exteriores, interiores, estudos de geometria e animações — do modelo à apresentação final.</p>
       </div>
@@ -666,7 +899,7 @@
     <!-- ================= DOCUMENTAÇÃO ================= -->
     <section class="band" id="documentacao"><div class="container">
       <div class="section-title">
-        <span class="eyebrow">[ 04 · DOCUMENTAÇÃO ]</span>
+        <span class="eyebrow">[ 05 · DOCUMENTAÇÃO ]</span>
         <h2>Pranchas Executivas Prontas para Obra</h2>
         <p>Plantas, forros, cortes e legendas gerados direto do modelo — o mesmo arquivo que alimenta o render.</p>
       </div>
@@ -701,7 +934,7 @@
     <section id="processo">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">[ 05 · PROCESSO ]</span>
+          <span class="eyebrow">[ 06 · PROCESSO ]</span>
           <h2>Como Trabalhamos</h2>
           <p>Um fluxo enxuto, do briefing à entrega dos arquivos nativos.</p>
         </div>
@@ -718,7 +951,7 @@
     <section class="container" id="contato">
       <div class="contact-card">
         <div class="section-title" style="margin-bottom: 24px;">
-          <span class="eyebrow">[ 06 · CONTATO ]</span>
+          <span class="eyebrow">[ 07 · CONTATO ]</span>
           <h2>Canais de Atendimento</h2>
           <p>Fale diretamente com a equipe técnica ou envie seus requisitos para cotação formal.</p>
         </div>
@@ -797,6 +1030,7 @@
                   <option>Plugins & Revit API</option>
                   <option>Sistemas (Redes / SDAI / CFTV)</option>
                   <option>Texturização & Renders 3D</option>
+                  <option>ReRevit Plugin (demonstração / licença)</option>
                 </select>
               </div>
               <div class="form-group">
@@ -915,7 +1149,58 @@
       });
     }
     document.querySelectorAll('[data-tab]').forEach(el =>
-      el.addEventListener('click', () => activateTab(el.dataset.tab)));
+      el.addEventListener('click', () => {
+        activateTab(el.dataset.tab);
+        if (el.dataset.service) document.getElementById('serviceSelect').value = el.dataset.service;
+      }));
+
+    /* ====== RIBBON DO PLUGIN (ícones reais da extensão) ====== */
+    const I = n => `assets/plugin/${n}.png`;
+    const RIBBON = [
+      { tab: 'Re.Auto', tools: 17, desc: 'Automação de projeto — prepara o arquivo e insere pontos, circuitos e sistemas por etapas.', panels: [
+        { name: 'Projeto', btns: [['preparar-projeto','Preparar Projeto'], ['preparar-auto','Preparar Automático'], ['verificar-projeto','Verificar Projeto']] },
+        { name: 'Automático', btns: [['inserir-auto','Inserir Auto'], ['pontos-objeto','Pontos por Objeto'], ['auto-circuitos','Auto Circuitos'], ['spda','SPDA']] } ] },
+      { tab: 'Re.Doc', tools: 42, desc: 'Documentação — cotas, tags, folhas, revisões e exportação.', panels: [
+        { name: 'Cotas', btns: [['auto-cotas','Auto Cotas']] },
+        { name: 'Tags', btns: [['posicionar-tags','Posicionar Tags'], ['tags-padrao','Tags Padrão']] },
+        { name: 'Folhas', btns: [['criar-folhas','Criar Folhas'], ['ajustar-folhas','Ajustar Folhas'], ['preencher-indice','Preencher Índice']] },
+        { name: 'Revisões', btns: [['gerar-revisao','Gerar Revisão']] },
+        { name: 'Exportar', btns: [['exportar','Exportar']] } ] },
+      { tab: 'Re.Ele', tools: 124, desc: 'Elétrica e sistemas — dispositivos, eletrodutos, circuitos, planilhas e vistas.', panels: [
+        { name: 'Conduítes', btns: [['eletrodutos-lote','Eletrodutos em Lote'], ['conectar-luminarias','Conectar Luminárias']] },
+        { name: 'Circuitos', btns: [['definir-circuitos','Definir Circuitos'], ['planilha-carga','Planilha de Carga'], ['recalcular-cabos','Recalcular Cabos']] },
+        { name: 'Vistas', btns: [['mapa-forros','Mapa de Forros'], ['editor-vistas','Editor de Vistas']] } ] },
+      { tab: 'Re.Arqui', tools: 14, desc: 'Arquitetura — ambientes, cômodos, níveis e levantamento topográfico.', panels: [
+        { name: 'Ambientes', btns: [['ambientes-auto','Ambientes Automáticos'], ['editar-ambientes','Editar Ambientes'], ['vista-ambientes','Vista de Ambientes']] },
+        { name: 'Construir', btns: [['comodo-dimensoes','Cômodo por Dimensões']] },
+        { name: 'Relevo', btns: [['editar-niveis','Editar Níveis'], ['lev-topografico','Lev. Topográfico']] } ] },
+      { tab: 'Re.Config', tools: 18, desc: 'Configuração — banco de dados entre projetos, padrões técnicos e modelos.', panels: [
+        { name: 'Banco de Dados', btns: [['db-ambientes','Ambientes Padrão'], ['db-moveis','Móveis'], ['db-novo-ponto','Novo Ponto Auto'], ['db-backup','Backup do Banco']] },
+        { name: 'Padrões', btns: [['padroes','Padrões'], ['padroes-eletricos','Padrões Elétricos'], ['padroes-spda','Padrões SPDA']] },
+        { name: 'Projeto', btns: [['salvar-modelo','Salvar Modelo']] } ] },
+    ];
+    const rTabs = document.getElementById('ribbonTabs');
+    const rBody = document.getElementById('ribbonBody');
+    const rDesc = document.getElementById('ribbonDesc');
+    function showRibbon(i) {
+      const t = RIBBON[i];
+      rTabs.querySelectorAll('button').forEach((b, k) => { b.classList.toggle('active', k === i); b.setAttribute('aria-selected', k === i); });
+      rBody.innerHTML = t.panels.map(p => `
+        <div class="r-panel">
+          <div class="r-btns">${p.btns.map(([ic, lb]) => `
+            <div class="r-btn"><img src="${I(ic)}" alt="" loading="lazy"><span>${lb}</span></div>`).join('')}
+          </div>
+          <div class="r-panel-name">${p.name}</div>
+        </div>`).join('');
+      rDesc.innerHTML = `<b>${t.tab}</b> · ${t.tools} ferramentas — ${t.desc}`;
+    }
+    RIBBON.forEach((t, i) => {
+      const b = document.createElement('button');
+      b.textContent = t.tab; b.setAttribute('role', 'tab');
+      b.addEventListener('click', () => showRibbon(i));
+      rTabs.appendChild(b);
+    });
+    showRibbon(0);
 
     // Copiar e-mail
     document.getElementById('btnCopy').addEventListener('click', async (e) => {
