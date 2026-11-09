@@ -194,7 +194,6 @@
     .clay { z-index: 2; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
     .clay img { position: absolute; inset: 0; filter: grayscale(1) contrast(.7) brightness(1.38); }
     .clay img.wire { filter: none; opacity: .95; }
-    .clay svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .badge {
       position: absolute; top: 14px; z-index: 5; pointer-events: none;
       padding: 6px 12px; border-radius: 6px; font-family: var(--mono); font-size: .72rem; font-weight: 700;
@@ -202,6 +201,7 @@
     }
     .badge.left { left: 14px; border: 1px solid #fff; color: #fff; }
     .badge.right { right: 14px; border: 1px solid var(--accent-cyan); color: var(--accent-cyan); }
+    .badge.bottom-left { top: auto; bottom: 14px; left: 14px; border: 1px solid rgba(255,255,255,.5); color: #fff; font-weight: 500; }
     .handle {
       position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; z-index: 6;
       background: var(--accent-cyan); box-shadow: 0 0 16px rgba(56,189,248,.95);
@@ -623,27 +623,7 @@
           <div class="comp-layer clay" aria-hidden="true">
             <img src="assets/render-casa01.jpg" alt="">
             <img class="wire" src="assets/wire-casa01.png" alt="">
-            <svg viewBox="0 0 2000 1116" preserveAspectRatio="none">
-              <g stroke="#0ea5e9" stroke-width="1.6" stroke-dasharray="10 8" opacity=".75">
-                <line x1="0" y1="640" x2="2000" y2="640"/>
-                <line x1="0" y1="430" x2="2000" y2="430"/>
-                <line x1="740" y1="0" x2="740" y2="1116"/>
-                <line x1="1150" y1="0" x2="1150" y2="1116"/>
-              </g>
-              <g fill="#38bdf8" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700">
-                <text x="40" y="1085" font-size="30">LOD 300 · VISTA 3D {CLAY}</text>
-                <text x="1110" y="625" font-size="24">+3,10</text>
-                <text x="1110" y="415" font-size="24">+6,20</text>
-                <text x="750" y="175" font-size="24">EIXO 2</text>
-                <text x="1158" y="175" font-size="24">EIXO 3</text>
-              </g>
-              <g stroke="#38bdf8" stroke-width="2">
-                <line x1="380" y1="930" x2="1095" y2="930"/>
-                <line x1="380" y1="915" x2="380" y2="945"/>
-                <line x1="1095" y1="915" x2="1095" y2="945"/>
-              </g>
-              <text x="738" y="918" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="22" text-anchor="middle">17,00</text>
-            </svg>
+            <span class="badge bottom-left">LOD 300 · VISTA 3D {CLAY}</span>
           </div>
 
           <div class="handle"><span>⇄</span></div>
