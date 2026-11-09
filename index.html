@@ -485,6 +485,49 @@
     .plugin-cta .req { font-family: var(--mono); font-size: .75rem; color: var(--text-dim); display: block; margin-top: 4px; }
     .plugin-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
+    /* ---------- Licenças ---------- */
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto 44px; }
+    .plan {
+      position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 28px 24px 24px; display: flex; flex-direction: column; transition: transform .3s, border-color .3s;
+    }
+    .plan:hover { transform: translateY(-4px); border-color: var(--primary-blue); }
+    .plan.destaque { border-color: var(--accent-cyan); background: linear-gradient(160deg, #0f3150 0%, #0b2338 70%); box-shadow: 0 0 40px rgba(56,189,248,.12); }
+    .plan .tag {
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--accent-cyan); color: var(--bg-dark);
+      font-family: var(--mono); font-size: .68rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+    }
+    .plan h3 { font-size: 1.15rem; margin-bottom: 4px; }
+    .plan .sub { color: var(--text-muted); font-size: .88rem; min-height: 2.6em; }
+    .plan .price { margin: 16px 0 18px; display: flex; align-items: baseline; gap: 6px; }
+    .plan .price strong { font-size: 2.1rem; font-weight: 800; color: #fff; }
+    .plan .price span { color: var(--text-muted); font-size: .9rem; }
+    .plan .price.consulte strong { font-size: 1.5rem; }
+    .plan ul { list-style: none; display: grid; gap: 8px; margin-bottom: 22px; flex: 1; }
+    .plan li { font-size: .9rem; padding-left: 22px; position: relative; }
+    .plan li::before { content: "✓"; position: absolute; left: 2px; color: var(--accent-cyan); font-weight: 700; }
+    .plan .btn { width: 100%; padding: 12px; }
+    .plan .note { margin-top: 8px; text-align: center; font-family: var(--mono); font-size: .7rem; color: var(--text-dim); }
+
+    .lic-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; max-width: 1000px; margin: 0 auto; }
+    .lic-grid h3 { font-size: 1.1rem; margin-bottom: 14px; }
+    .lic-steps ol { list-style: none; counter-reset: s; display: grid; gap: 14px; }
+    .lic-steps li { counter-increment: s; position: relative; padding-left: 44px; display: flex; flex-direction: column; gap: 2px; }
+    .lic-steps li::before {
+      content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(56,189,248,.12); border: 1px solid var(--accent-cyan); color: var(--accent-cyan);
+      display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; font-size: .85rem;
+    }
+    .lic-steps li span { color: var(--text-muted); font-size: .9rem; }
+    .lic-steps code { font-family: var(--mono); font-size: .8rem; background: var(--bg-card); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--accent-cyan); }
+    .faq details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; }
+    .faq summary { cursor: pointer; padding: 12px 16px; font-weight: 600; font-size: .95rem; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--accent-cyan); font-family: var(--mono); font-weight: 700; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { padding: 0 16px 14px; color: var(--text-muted); font-size: .9rem; }
+    @media (max-width: 960px) { .lic-grid { grid-template-columns: 1fr; } }
+
     .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; }
     .step { border-top: 2px solid var(--border); padding-top: 18px; }
     .step:hover { border-top-color: var(--accent-cyan); }
@@ -668,6 +711,7 @@
         <ul>
           <li><a href="#solucoes">Soluções</a></li>
           <li><a href="#plugin" class="nav-plugin">Plugin</a></li>
+          <li><a href="#licencas">Licenças</a></li>
           <li><a href="#comparador">Renders</a></li>
           <li><a href="#portfolio">Portfólio</a></li>
           <li><a href="#documentacao">Documentação</a></li>
@@ -963,10 +1007,54 @@
             <p>Agende uma demonstração ou peça informações sobre licença. <span class="req">Requer Autodesk Revit + pyRevit.</span></p>
           </div>
           <div class="plugin-cta-actions">
-            <a href="#contato" class="btn btn-primary" data-tab="orcamento" data-service="ReRevit Plugin (demonstração / licença)">Solicitar Demonstração</a>
+            <a href="#licencas" class="btn btn-primary">Ver Licenças</a>
+            <a href="#contato" class="btn btn-outline" style="padding:12px 20px;" data-tab="orcamento" data-service="ReRevit Plugin (demonstração / licença)">Solicitar Demonstração</a>
             <a class="btn btn-wa" style="width:auto; padding:12px 20px;" target="_blank" rel="noopener" data-wa="wa2" data-msg="Olá, gostaria de saber mais sobre o ReRevit Plugin.">
               <svg class="icon"><use href="#i-chat"/></svg> WhatsApp
             </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LICENÇAS ================= -->
+    <section class="band" id="licencas">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">[ 03 · LICENÇAS ]</span>
+          <h2>Licenças do ReRevit Plugin</h2>
+          <p>Escolha o plano, receba a chave por e-mail e ative direto no Revit. Pagamento seguro processado pela Lemon Squeezy.</p>
+        </div>
+
+        <div class="plans" id="plans"></div>
+
+        <div class="lic-grid">
+          <div class="lic-steps">
+            <h3>Como ativar</h3>
+            <ol>
+              <li><b>Compre o plano</b><span>O checkout abre aqui mesmo, sem sair do site.</span></li>
+              <li><b>Receba a chave</b><span>A chave de licença chega no seu e-mail logo após o pagamento.</span></li>
+              <li><b>Ative no Revit</b><span>Aba <code>Re.Config</code> › <code>Extensão</code> › <code>Licença</code>: cole a chave e clique em <b>Ativar</b>.</span></li>
+            </ol>
+          </div>
+          <div class="faq">
+            <h3>Perguntas frequentes</h3>
+            <details open>
+              <summary>Em quantos computadores posso usar?</summary>
+              <p>Cada chave vale para um número de computadores definido pelo plano. Para trocar de computador, use <b>Desativar neste computador</b> na janela de Licença e ative a chave no novo.</p>
+            </details>
+            <details>
+              <summary>Preciso de internet para usar?</summary>
+              <p>Só para ativar e para a confirmação periódica. Sem conexão, o plugin continua funcionando por até 7 dias com a última confirmação.</p>
+            </details>
+            <details>
+              <summary>O que é necessário para instalar?</summary>
+              <p>Autodesk Revit com o pyRevit instalado. O ReRevit Plugin aparece como abas próprias na faixa de opções.</p>
+            </details>
+            <details>
+              <summary>Como recebo nota e recibo?</summary>
+              <p>A Lemon Squeezy envia o recibo por e-mail automaticamente e cuida dos impostos da compra.</p>
+            </details>
           </div>
         </div>
       </div>
@@ -976,7 +1064,7 @@
     <section class="band" id="comparador">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">[ 03 · VISUALIZAÇÃO ]</span>
+          <span class="eyebrow">[ 04 · VISUALIZAÇÃO ]</span>
           <h2>Do Modelo Bruto ao Render Final</h2>
           <p>Arraste a linha central para comparar a geometria do modelo (clay + wireframe) com o render final texturizado.</p>
         </div>
@@ -1014,7 +1102,7 @@
     <!-- ================= PORTFÓLIO ================= -->
     <section class="container" id="portfolio">
       <div class="section-title">
-        <span class="eyebrow">[ 04 · PORTFÓLIO ]</span>
+        <span class="eyebrow">[ 05 · PORTFÓLIO ]</span>
         <h2>Galeria de Projetos & Visualizações</h2>
         <p>Exteriores, interiores, estudos de geometria e animações — do modelo à apresentação final.</p>
       </div>
@@ -1034,7 +1122,7 @@
     <!-- ================= DOCUMENTAÇÃO ================= -->
     <section class="band" id="documentacao"><div class="container">
       <div class="section-title">
-        <span class="eyebrow">[ 05 · DOCUMENTAÇÃO ]</span>
+        <span class="eyebrow">[ 06 · DOCUMENTAÇÃO ]</span>
         <h2>Pranchas Executivas Prontas para Obra</h2>
         <p>Plantas, quadros e detalhes gerados direto do modelo Revit — documentação de um projeto executivo real.</p>
       </div>
@@ -1070,7 +1158,7 @@
     <section id="processo">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">[ 06 · PROCESSO ]</span>
+          <span class="eyebrow">[ 07 · PROCESSO ]</span>
           <h2>Como Trabalhamos</h2>
           <p>Um fluxo enxuto, do briefing à entrega dos arquivos nativos.</p>
         </div>
@@ -1087,7 +1175,7 @@
     <section class="container" id="contato">
       <div class="contact-card">
         <div class="section-title" style="margin-bottom: 24px;">
-          <span class="eyebrow">[ 07 · CONTATO ]</span>
+          <span class="eyebrow">[ 08 · CONTATO ]</span>
           <h2>Canais de Atendimento</h2>
           <p>Fale diretamente com a equipe técnica ou envie seus requisitos para cotação formal.</p>
         </div>
@@ -1304,6 +1392,49 @@
       instVideo.play().catch(() => {});
     });
     instVideo.addEventListener('play', () => instFrame.classList.add('playing'));
+
+    /* ====== LOJA (Lemon Squeezy) — edite apenas aqui ======
+       ativa: false  → nenhum checkout; planos sem preço mostram "Consulte" e levam ao WhatsApp.
+       ativa: true   → carrega o Lemon.js e os botões abrem o checkout sobreposto.
+       checkout: link "Share" do produto/variante na Lemon Squeezy (ex.: https://SUA-LOJA.lemonsqueezy.com/buy/xxxx).
+       preco: texto exibido (ex.: 'R$ 89'); null = "Consulte". maquinas: número de computadores por chave. */
+    const LOJA = {
+      ativa: false,
+      planos: [
+        { id: 'mensal',    nome: 'Mensal',    sub: 'Para começar sem compromisso.',          preco: null, periodo: '/mês', maquinas: null, checkout: '' },
+        { id: 'anual',     nome: 'Anual',     sub: 'O melhor custo para uso contínuo.',      preco: null, periodo: '/ano', maquinas: null, checkout: '', destaque: 'Mais escolhido' },
+        { id: 'escritorio', nome: 'Escritório', sub: 'Várias licenças para a sua equipe.',   preco: null, periodo: '',     maquinas: null, checkout: '' },
+      ],
+      inclui: ['Todas as 150+ ferramentas', 'Atualizações durante a vigência', 'Banco de dados entre projetos', 'Suporte por WhatsApp e e-mail'],
+    };
+
+    (function montarPlanos() {
+      const box = document.getElementById('plans');
+      const temCheckout = p => LOJA.ativa && p.checkout && p.preco;
+      box.innerHTML = LOJA.planos.map(p => {
+        const itens = [...LOJA.inclui, p.maquinas ? `Ativação em ${p.maquinas} computador${p.maquinas > 1 ? 'es' : ''}` : 'Ativação por computador'];
+        const preco = p.preco
+          ? `<div class="price"><strong>${p.preco}</strong><span>${p.periodo}</span></div>`
+          : `<div class="price consulte"><strong>Consulte</strong></div>`;
+        const msg = `Olá, tenho interesse na licença ${p.nome} do ReRevit Plugin.`;
+        const botao = temCheckout(p)
+          ? `<a href="${p.checkout}${p.checkout.includes('?') ? '&' : '?'}embed=1" class="btn btn-primary lemonsqueezy-button">Comprar ${p.nome}</a>`
+          : `<a class="btn ${p.destaque ? 'btn-primary' : 'btn-outline'}" target="_blank" rel="noopener" href="${waLink('wa2', msg)}">Falar sobre o plano ${p.nome}</a>`;
+        const nota = temCheckout(p) ? 'Pagamento seguro · Lemon Squeezy' : 'Em breve: compra direto pelo site';
+        return `<article class="plan${p.destaque ? ' destaque' : ''}">
+          ${p.destaque ? `<span class="tag">${p.destaque}</span>` : ''}
+          <h3>${p.nome}</h3><p class="sub">${p.sub}</p>${preco}
+          <ul>${itens.map(i => `<li>${i}</li>`).join('')}</ul>
+          ${botao}<div class="note">${nota}</div>
+        </article>`;
+      }).join('');
+      if (LOJA.ativa && LOJA.planos.some(temCheckout)) {
+        const s = document.createElement('script');
+        s.src = 'https://assets.lemonsqueezy.com/lemon.js'; s.defer = true;
+        s.onload = () => window.createLemonSqueezy && window.createLemonSqueezy();
+        document.head.appendChild(s);
+      }
+    })();
 
     /* ====== RIBBON DO PLUGIN (ícones reais da extensão) ====== */
     const I = n => `assets/plugin/${n}.png`;
