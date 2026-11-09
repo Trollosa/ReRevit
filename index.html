@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReRevit | Soluções para Engenharia & BIM</title>
+  <meta name="description" content="ReRevit — projetos elétricos e SPDA, famílias e modelos Revit, plugins via Revit API, sistemas e renders fotorrealistas.">
+  <link rel="icon" type="image/png" href="assets/logo-r.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #071622;
+      --bg-surface: #0a1f30;
+      --bg-card: #0d283e;
+      --bg-card-hover: #133652;
+      --bg-deep: #05111b;
+      --primary-blue: #5b92b6;
+      --accent-cyan: #38bdf8;
+      --emerald: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border: rgba(91, 146, 182, 0.28);
+      --border-soft: rgba(91, 146, 182, 0.16);
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(rgba(91, 146, 182, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, #071622 0%, #091c2b 50%, #06131e 100%);
+      background-size: 28px 28px, 100% 100%;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .icon { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+
+    /* ---------- Header ---------- */
+    header {
+      position: fixed; inset: 0 0 auto 0;
+      background: rgba(7, 22, 34, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: #fff;
+      font-weight: 800; font-size: 1.4rem; letter-spacing: 0.3px;
+    }
+    .brand-logo img { height: 36px; width: auto; filter: brightness(1.35) drop-shadow(0 0 8px rgba(56,189,248,.25)); }
+    .brand-logo .re { color: var(--primary-blue); }
+    .brand-tag {
+      font-family: var(--mono); font-size: 0.62rem; font-weight: 500;
+      color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 2px 6px; border-radius: 4px;
+    }
+
+    nav ul { display: flex; list-style: none; gap: 26px; align-items: center; }
+    nav a { text-decoration: none; color: var(--text-muted); font-size: 0.92rem; font-weight: 500; transition: color .2s; }
+    nav a:hover { color: var(--accent-cyan); }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 6px; text-decoration: none; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: all .2s; white-space: nowrap;
+    }
+    .btn-ghost {
+      background: rgba(13, 40, 62, .85); border: 1px solid var(--border); color: #fff;
+      padding: 8px 14px; font-size: .85rem;
+    }
+    .btn-ghost:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 0 0 10px rgba(56,189,248,.2); }
+    .btn-outline {
+      background: linear-gradient(135deg, #1b4b6b 0%, #0d283e 100%);
+      border: 1px solid var(--accent-cyan); color: #fff; padding: 8px 18px; font-size: .9rem;
+    }
+    .btn-outline:hover { background: var(--accent-cyan); color: var(--bg-dark); box-shadow: 0 0 15px rgba(56,189,248,.45); }
+    .btn-primary {
+      background: var(--accent-cyan); color: var(--bg-dark); border: none;
+      padding: 12px 26px; font-weight: 700; font-size: .95rem;
+    }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 20px rgba(56,189,248,.4); }
+
+    .menu-toggle {
+      display: none; background: none; border: 1px solid var(--border); color: #fff;
+      border-radius: 6px; width: 40px; height: 40px; cursor: pointer;
+      align-items: center; justify-content: center;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      padding: 150px 24px 90px; max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 48px;
+    }
+    .tagline {
+      display: inline-block; font-family: var(--mono); font-size: .8rem; color: var(--accent-cyan);
+      background: rgba(56,189,248,.08); border: 1px solid rgba(56,189,248,.35);
+      padding: 6px 14px; border-radius: 4px; margin-bottom: 20px; letter-spacing: .8px;
+    }
+    .hero h1 { font-size: clamp(2rem, 4.4vw, 2.9rem); font-weight: 800; line-height: 1.18; margin-bottom: 20px; }
+    .hero h1 span {
+      background: linear-gradient(90deg, #fff 10%, var(--primary-blue) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--text-muted); font-size: 1.08rem; margin-bottom: 32px; max-width: 540px; }
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-stats {
+      display: flex; gap: 28px; margin-top: 40px; padding-top: 24px;
+      border-top: 1px solid var(--border-soft); flex-wrap: wrap;
+    }
+    .hero-stats div { font-family: var(--mono); font-size: .75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .5px; }
+    .hero-stats strong { display: block; font-family: 'Inter', sans-serif; font-size: 1.05rem; color: #fff; text-transform: none; letter-spacing: 0; }
+
+    .hero-visual {
+      position: relative; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); box-shadow: 0 24px 48px rgba(0,0,0,.55);
+      aspect-ratio: 4 / 3.4; background: var(--bg-card);
+    }
+    .hero-visual img { width: 100%; height: 100%; object-fit: cover; object-position: 38% center; }
+    .hero-visual::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(7,22,34,.92) 100%);
+    }
+    .hero-visual .caption {
+      position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 2;
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      font-family: var(--mono); font-size: .72rem; color: var(--text-muted);
+    }
+    .hero-visual .caption b { color: var(--accent-cyan); font-weight: 700; }
+    .corner { position: absolute; width: 18px; height: 18px; border-color: var(--accent-cyan); border-style: solid; z-index: 2; }
+    .corner.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+    .corner.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
+
+    /* ---------- Generic sections ---------- */
+    .container { max-width: 1200px; margin: 0 auto; padding: 88px 24px; }
+    .section-title { text-align: center; margin-bottom: 48px; }
+    .section-title .eyebrow { font-family: var(--mono); font-size: .75rem; color: var(--accent-cyan); letter-spacing: 1px; }
+    .section-title h2 { font-size: clamp(1.7rem, 3.2vw, 2.2rem); margin: 8px 0 10px; }
+    .section-title p { color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    /* ---------- Services ---------- */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 28px 24px; transition: all .3s;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .card:hover { transform: translateY(-5px); border-color: var(--accent-cyan); background: var(--bg-card-hover); box-shadow: 0 10px 25px rgba(0,0,0,.35); }
+    .card-icon {
+      width: 46px; height: 46px; border-radius: 8px; margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(56,189,248,.08); border: 1px solid rgba(56,189,248,.3); color: var(--accent-cyan);
+    }
+    .card-icon svg { width: 24px; height: 24px; }
+    .card h3 { font-size: 1.18rem; margin-bottom: 10px; }
+    .card p { color: var(--text-muted); font-size: .94rem; margin-bottom: 18px; }
+    .card-tags {
+      border-top: 1px solid var(--border-soft); padding-top: 12px; list-style: none;
+      font-family: var(--mono); font-size: .76rem; color: var(--primary-blue);
+    }
+    .card-tags li { margin-bottom: 5px; }
+    .card-tags li::before { content: "✓ "; color: var(--accent-cyan); }
+
+    /* ---------- Comparator ---------- */
+    .band { background: var(--bg-deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .comparator {
+      position: relative; max-width: 960px; margin: 0 auto; aspect-ratio: 2752 / 1536;
+      border-radius: 14px; overflow: hidden; border: 2px solid var(--border);
+      box-shadow: 0 20px 45px rgba(0,0,0,.65); user-select: none; touch-action: pan-y;
+      cursor: ew-resize; background: #061521; --pos: 50%;
+    }
+    .comp-layer { position: absolute; inset: 0; }
+    .comp-layer img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .clay { z-index: 2; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+    .clay img { position: absolute; inset: 0; filter: grayscale(1) contrast(.7) brightness(1.38); }
+    .clay img.wire { filter: none; opacity: .95; }
+    .clay svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .badge {
+      position: absolute; top: 14px; z-index: 5; pointer-events: none;
+      padding: 6px 12px; border-radius: 6px; font-family: var(--mono); font-size: .72rem; font-weight: 700;
+      background: rgba(7,22,34,.88); backdrop-filter: blur(8px);
+    }
+    .badge.left { left: 14px; border: 1px solid #fff; color: #fff; }
+    .badge.right { right: 14px; border: 1px solid var(--accent-cyan); color: var(--accent-cyan); }
+    .handle {
+      position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; z-index: 6;
+      background: var(--accent-cyan); box-shadow: 0 0 16px rgba(56,189,248,.95);
+      transform: translateX(-50%); pointer-events: none;
+    }
+    .handle span {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--bg-dark); border: 2px solid var(--accent-cyan); color: var(--accent-cyan);
+      display: flex; align-items: center; justify-content: center; font-weight: 700;
+      box-shadow: 0 0 18px rgba(56,189,248,.7);
+    }
+    .comparator input[type=range] {
+      position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; z-index: 7; cursor: ew-resize; margin: 0;
+    }
+    .comparator:focus-within { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }
+    .comp-controls {
+      max-width: 960px; margin: 18px auto 0; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px; font-family: var(--mono); font-size: .8rem; color: var(--text-muted);
+    }
+    .toggle-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-toggle {
+      background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main);
+      padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: .76rem; font-family: var(--mono); transition: all .2s;
+    }
+    .btn-toggle.active, .btn-toggle:hover { background: var(--accent-cyan); color: var(--bg-dark); border-color: var(--accent-cyan); font-weight: 700; }
+
+    /* ---------- Documentation / sheet ---------- */
+    .doc-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 32px; align-items: center; }
+    .sheet {
+      position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
+      background: #fff; cursor: zoom-in; box-shadow: 0 20px 40px rgba(0,0,0,.5); padding: 0;
+    }
+    .sheet img { transition: transform .4s; }
+    .sheet:hover img { transform: scale(1.02); }
+    .sheet .zoom-hint {
+      position: absolute; right: 12px; bottom: 12px; font-family: var(--mono); font-size: .72rem;
+      background: rgba(7,22,34,.9); color: var(--accent-cyan); border: 1px solid var(--accent-cyan);
+      padding: 5px 10px; border-radius: 5px; display: flex; gap: 6px; align-items: center;
+    }
+    .doc-list { list-style: none; display: grid; gap: 14px; }
+    .doc-list li {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px;
+    }
+    .doc-list .k { font-family: var(--mono); font-size: .72rem; color: var(--accent-cyan); letter-spacing: .5px; }
+    .doc-list h4 { font-size: 1rem; margin: 4px 0 4px; }
+    .doc-list p { color: var(--text-muted); font-size: .88rem; }
+
+    /* ---------- Portfolio gallery ---------- */
+    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 32px; }
+    .filter {
+      background: var(--bg-card); border: 1px solid var(--border); color: var(--text-muted);
+      padding: 8px 16px; border-radius: 999px; cursor: pointer; font-family: var(--mono); font-size: .78rem;
+      transition: all .2s;
+    }
+    .filter:hover { color: #fff; border-color: var(--primary-blue); }
+    .filter.active { background: var(--accent-cyan); border-color: var(--accent-cyan); color: var(--bg-dark); font-weight: 700; }
+    .filter .n { opacity: .6; margin-left: 4px; }
+
+    .gallery {
+      display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px;
+      grid-auto-flow: dense; gap: 14px;
+    }
+    .tile {
+      position: relative; overflow: hidden; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg-card); cursor: zoom-in; padding: 0; text-align: left; color: inherit; font: inherit;
+      animation: tileIn .35s ease both;
+    }
+    .tile.wide { grid-column: span 2; }
+    .tile.big { grid-column: span 2; grid-row: span 2; }
+    .tile img, .tile video { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; display: block; }
+    .tile:hover img, .tile:hover video { transform: scale(1.05); }
+    .tile:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 2px; }
+    .tile .meta {
+      position: absolute; inset: auto 0 0 0; padding: 30px 14px 12px;
+      background: linear-gradient(180deg, transparent, rgba(5,17,27,.94));
+      display: flex; flex-direction: column; gap: 2px;
+      transform: translateY(6px); opacity: .92; transition: all .3s;
+    }
+    .tile:hover .meta { transform: none; opacity: 1; }
+    .tile .meta span { font-family: var(--mono); font-size: .66rem; color: var(--accent-cyan); letter-spacing: .5px; text-transform: uppercase; }
+    .tile .meta strong { font-size: .92rem; color: #fff; font-weight: 600; }
+    .tile .play {
+      position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(7,22,34,.85); border: 1px solid var(--accent-cyan); color: var(--accent-cyan);
+      display: flex; align-items: center; justify-content: center; font-size: .8rem; padding-left: 2px;
+    }
+    .tile.hide { display: none; }
+    @keyframes tileIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000; background: rgba(3,10,16,.96);
+      display: none; align-items: center; justify-content: center; padding: 56px 72px;
+    }
+    .lightbox.open { display: flex; }
+    .lb-stage { max-width: 100%; max-height: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    #lbMedia { display: flex; justify-content: center; min-height: 0; }
+    #lbMedia img, #lbMedia video {
+      max-width: calc(100vw - 144px); max-height: calc(100vh - 150px);
+      border-radius: 6px; box-shadow: 0 0 40px rgba(0,0,0,.6); background: #000;
+    }
+    .lb-caption { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; justify-content: center; text-align: center; }
+    .lb-caption span { font-family: var(--mono); font-size: .72rem; color: var(--accent-cyan); text-transform: uppercase; }
+    .lb-caption strong { font-weight: 600; }
+    #lbCount { color: var(--text-dim) !important; }
+    .lb-btn {
+      position: absolute; width: 46px; height: 46px; border-radius: 50%;
+      background: var(--bg-card); color: #fff; border: 1px solid var(--border); font-size: 1.5rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .lb-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .lb-close { top: 14px; right: 14px; font-size: 1.1rem; }
+    .lb-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+    .lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
+
+    /* ---------- Process ---------- */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; }
+    .step { border-top: 2px solid var(--border); padding-top: 18px; }
+    .step:hover { border-top-color: var(--accent-cyan); }
+    .step::before {
+      counter-increment: step; content: "0" counter(step);
+      font-family: var(--mono); font-size: .8rem; color: var(--accent-cyan); font-weight: 700;
+    }
+    .step h4 { margin: 6px 0; font-size: 1.02rem; }
+    .step p { color: var(--text-muted); font-size: .9rem; }
+
+    /* ---------- Contact ---------- */
+    .contact-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 38px; max-width: 880px; margin: 0 auto; box-shadow: 0 20px 45px rgba(0,0,0,.45);
+    }
+    .tabs-nav {
+      display: flex; background: var(--bg-deep); padding: 4px; border-radius: 8px;
+      border: 1px solid var(--border); margin-bottom: 28px; gap: 4px;
+    }
+    .tab-btn {
+      flex: 1; padding: 12px; border: none; background: transparent; color: var(--text-muted);
+      font-weight: 600; font-size: .92rem; border-radius: 6px; cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit;
+    }
+    .tab-btn.active { background: var(--accent-cyan); color: var(--bg-dark); font-weight: 700; box-shadow: 0 2px 10px rgba(56,189,248,.25); }
+    .tab-panel[hidden] { display: none; }
+
+    .email-box {
+      background: linear-gradient(135deg, #0b2238 0%, #051624 100%);
+      border: 2px solid var(--accent-cyan); border-radius: 10px; padding: 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;
+    }
+    .label-mono { font-family: var(--mono); font-size: .72rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: .5px; }
+    .email-address { font-family: var(--mono); font-size: clamp(1.15rem, 3vw, 1.55rem); font-weight: 700; user-select: all; word-break: break-all; }
+    .email-box p { font-size: .85rem; color: var(--text-muted); margin-top: 4px; }
+
+    .wa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .wa-box {
+      background: #061521; border: 1px solid var(--border); border-radius: 10px; padding: 22px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 14px; transition: border-color .2s;
+    }
+    .wa-box:hover { border-color: var(--emerald); }
+    .wa-box .label-mono { color: var(--emerald); font-weight: 700; }
+    .wa-box h4 { margin: 6px 0; }
+    .wa-box p { font-size: .85rem; color: var(--text-muted); margin-bottom: 10px; }
+    .wa-num { font-family: var(--mono); color: var(--emerald); font-weight: 700; }
+    .btn-wa { background: #059669; color: #fff; padding: 11px; font-size: .88rem; width: 100%; }
+    .btn-wa:hover { background: var(--emerald); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-family: var(--mono); font-size: .76rem; color: var(--text-muted);
+      margin-bottom: 6px; text-transform: uppercase;
+    }
+    .form-control {
+      width: 100%; background: #061521; border: 1px solid var(--border); border-radius: 6px;
+      padding: 11px 14px; color: #fff; font-size: .95rem; outline: none; transition: border-color .2s; font-family: inherit;
+    }
+    .form-control:focus { border-color: var(--accent-cyan); }
+    .form-note { font-size: .8rem; color: var(--text-dim); margin-top: 10px; text-align: center; }
+
+    /* ---------- Floating widget ---------- */
+    .floating-widget { position: fixed; bottom: 22px; right: 22px; z-index: 999; }
+    .floating-toggle {
+      background: linear-gradient(135deg, #059669, #0284c7); color: #fff;
+      border: 1px solid rgba(255,255,255,.35); padding: 12px 20px; border-radius: 30px;
+      font-weight: 700; font-size: .9rem; cursor: pointer; font-family: inherit;
+      box-shadow: 0 10px 25px rgba(0,0,0,.5); display: flex; align-items: center; gap: 8px; transition: transform .2s;
+    }
+    .floating-toggle:hover { transform: scale(1.03); }
+    .floating-menu {
+      display: none; position: absolute; bottom: 58px; right: 0; width: 280px;
+      background: #081a29; border: 1px solid var(--border); border-radius: 12px; padding: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.7);
+    }
+    .floating-menu.open { display: block; }
+    .floating-menu a {
+      display: flex; align-items: center; gap: 10px; padding: 10px; text-decoration: none;
+      color: #fff; font-size: .85rem; border-radius: 6px; transition: background .2s;
+    }
+    .floating-menu a:hover { background: var(--bg-card); color: var(--accent-cyan); }
+
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--border); background: #05101a; padding: 40px 24px 90px; color: var(--text-muted); font-size: .9rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .footer-brand { display: flex; align-items: center; gap: 14px; }
+    .footer-brand img { height: 46px; filter: brightness(1.35); }
+    .footer-brand strong { color: #fff; display: block; }
+    .footer-meta { font-family: var(--mono); font-size: .78rem; color: var(--text-dim); text-align: right; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding-top: 120px; }
+      .doc-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .nav-actions .btn-ghost { display: none; }
+      .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
+    }
+    @media (max-width: 1100px) { nav ul { gap: 18px; } }
+    @media (max-width: 768px) {
+      .menu-toggle { display: inline-flex; }
+      nav {
+        position: absolute; top: 100%; left: 0; right: 0; display: none;
+        background: rgba(7,22,34,.98); border-bottom: 1px solid var(--border);
+      }
+      nav.open { display: block; }
+      nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: 8px 16px 16px; }
+      nav li a { display: block; padding: 12px 4px; border-bottom: 1px solid var(--border-soft); }
+      .nav-actions .btn-outline { display: none; }
+      .container { padding: 64px 16px; }
+      .hero { padding: 108px 16px 64px; }
+      .contact-card { padding: 24px 18px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .tab-btn { font-size: .8rem; padding: 10px 6px; }
+      .badge { font-size: .62rem; padding: 4px 8px; top: 10px; }
+      .badge.left { left: 10px; } .badge.right { right: 10px; }
+      .floating-toggle .txt { display: none; }
+      .floating-toggle { padding: 14px; }
+      .footer-meta { text-align: left; }
+    }
+    @media (max-width: 520px) {
+      .steps { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; grid-auto-rows: 210px; }
+      .tile.wide, .tile.big { grid-column: auto; grid-row: auto; }
+      .lightbox { padding: 56px 8px 80px; }
+      #lbMedia img, #lbMedia video { max-width: calc(100vw - 16px); }
+      .lb-prev, .lb-next { top: auto; bottom: 14px; transform: none; }
+      .brand-tag { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SVG icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
+      <symbol id="i-family" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="m3 7 9 5 9-5M12 12v10"/></g></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></g></symbol>
+      <symbol id="i-net" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/><path d="M2 9a14.5 14.5 0 0 1 20 0"/></g></symbol>
+      <symbol id="i-render" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.6"/></g></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></g></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></g></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 20l1.4-4A8 8 0 1 1 8 19.3L4 20Z"/></symbol>
+      <symbol id="i-zoom" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></g></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand-logo" aria-label="ReRevit — início">
+        <img src="assets/logo-r.png" alt="">
+        <span><span class="re">Re</span>Revit</span>
+        <span class="brand-tag">[ENG]</span>
+      </a>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="#solucoes">Soluções</a></li>
+          <li><a href="#comparador">Renders & 3D</a></li>
+          <li><a href="#portfolio">Portfólio</a></li>
+          <li><a href="#documentacao">Documentação</a></li>
+          <li><a href="#processo">Processo</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="#contato" class="btn btn-ghost" data-tab="engenheiro">
+          <svg class="icon"><use href="#i-user"/></svg> Fale com um Engenheiro
+        </a>
+        <a href="#contato" class="btn btn-outline" data-tab="orcamento">Solicitar Orçamento</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <svg class="icon"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div>
+        <span class="tagline">[ SOLUÇÕES PARA ENGENHARIA & BIM ]</span>
+        <h1>Engenharia de Alta Precisão & <span>Automações no Revit</span></h1>
+        <p>Desenvolvemos projetos executivos integrados, famílias paramétricas, ferramentas customizadas via Revit API e renderizações fotorrealistas para elevar seu padrão técnico.</p>
+        <div class="hero-buttons">
+          <a href="#contato" class="btn btn-primary" data-tab="engenheiro">
+            <svg class="icon"><use href="#i-user"/></svg> Fale com um Engenheiro
+          </a>
+          <a href="#solucoes" class="btn btn-outline" style="padding:12px 24px;">Conhecer Serviços</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>NBR 5410 · 5419</strong>Conformidade</div>
+          <div><strong>LOD 200–400</strong>Modelagem</div>
+          <div><strong>C# · Python</strong>Revit API</div>
+        </div>
+      </div>
+
+      <figure class="hero-visual">
+        <i class="corner tl"></i><i class="corner tr"></i>
+        <img src="assets/render-casa01.jpg" alt="Render fotorrealista de residência moderna em concreto aparente">
+        <figcaption class="caption">
+          <span><b>CASA 01</b> · Residência em concreto</span>
+          <span>Revit → Render</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ================= SOLUÇÕES ================= -->
+    <section class="container" id="solucoes">
+      <div class="section-title">
+        <span class="eyebrow">[ 01 · SERVIÇOS ]</span>
+        <h2>Especialidades & Entregas</h2>
+        <p>Do projeto conceitual à automação avançada de fluxos e visualização em ambiente BIM.</p>
+      </div>
+
+      <div class="services-grid">
+        <article class="card">
+          <div>
+            <div class="card-icon"><svg><use href="#i-bolt"/></svg></div>
+            <h3>Projetos Elétricos & SPDA</h3>
+            <p>Dimensionamento rigoroso de BT/MT, aterramento, proteção contra descargas atmosféricas (NBR 5419/5410) e diagramação executiva de quadros.</p>
+          </div>
+          <ul class="card-tags">
+            <li>Diagramas Unifilares & QGBT</li>
+            <li>Malha SPDA & Descidas Estruturais</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div>
+            <div class="card-icon"><svg><use href="#i-family"/></svg></div>
+            <h3>Modelos & Famílias Revit</h3>
+            <p>Modelagem executiva e criação de famílias paramétricas (RFA) sob medida com conectores MEP para elétrica, hidráulica e catálogos de tipos.</p>
+          </div>
+          <ul class="card-tags">
+            <li>Famílias RFA com Conectores MEP</li>
+            <li>Padrões de Detalhe LOD 200 a 400</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div>
+            <div class="card-icon"><svg><use href="#i-code"/></svg></div>
+            <h3>Plugins & Revit API</h3>
+            <p>Desenvolvimento customizado de complementos em C# e pyRevit, automação de tabelas de quantitativos e rotinas para zerar retrabalhos manuais.</p>
+          </div>
+          <ul class="card-tags">
+            <li>Rotinas Customizadas em C#</li>
+            <li>Extração Automatizada de Dados</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div>
+            <div class="card-icon"><svg><use href="#i-net"/></svg></div>
+            <h3>Sistemas & Segurança</h3>
+            <p>Infraestrutura de cabeamento estruturado, dados, telefonia, CFTV IP e sistemas endereçáveis de detecção e alarme de incêndio (SDAI).</p>
+          </div>
+          <ul class="card-tags">
+            <li>Telecom Cat6A & Fibra Óptica</li>
+            <li>Detecção e Alarme (NBR 17240)</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div>
+            <div class="card-icon"><svg><use href="#i-render"/></svg></div>
+            <h3>Texturização & Renders</h3>
+            <p>Texturizações fotorrealistas com materiais PBR, estudo físico de iluminação e renderizações 3D que valorizam a apresentação comercial.</p>
+          </div>
+          <ul class="card-tags">
+            <li>Iluminação Físico-Realista</li>
+            <li>Apresentações Comerciais 4K</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= COMPARADOR ================= -->
+    <section class="band" id="comparador">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">[ 02 · VISUALIZAÇÃO ]</span>
+          <h2>Do Modelo Bruto ao Render Final</h2>
+          <p>Arraste a linha central para comparar a geometria do modelo (clay + wireframe) com o render final texturizado.</p>
+        </div>
+
+        <div class="comparator" id="compBox">
+          <span class="badge left">MODELO BIM (CLAY)</span>
+          <span class="badge right">RENDER FINAL 4K</span>
+
+          <div class="comp-layer">
+            <img src="assets/render-casa01.jpg" alt="Render final texturizado da Casa 01">
+          </div>
+
+          <div class="comp-layer clay" aria-hidden="true">
+            <img src="assets/render-casa01.jpg" alt="">
+            <img class="wire" src="assets/wire-casa01.png" alt="">
+            <svg viewBox="0 0 2000 1116" preserveAspectRatio="none">
+              <g stroke="#0ea5e9" stroke-width="1.6" stroke-dasharray="10 8" opacity=".75">
+                <line x1="0" y1="640" x2="2000" y2="640"/>
+                <line x1="0" y1="430" x2="2000" y2="430"/>
+                <line x1="740" y1="0" x2="740" y2="1116"/>
+                <line x1="1150" y1="0" x2="1150" y2="1116"/>
+              </g>
+              <g fill="#38bdf8" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700">
+                <text x="40" y="1085" font-size="30">LOD 300 · VISTA 3D {CLAY}</text>
+                <text x="1110" y="625" font-size="24">+3,10</text>
+                <text x="1110" y="415" font-size="24">+6,20</text>
+                <text x="750" y="175" font-size="24">EIXO 2</text>
+                <text x="1158" y="175" font-size="24">EIXO 3</text>
+              </g>
+              <g stroke="#38bdf8" stroke-width="2">
+                <line x1="380" y1="930" x2="1095" y2="930"/>
+                <line x1="380" y1="915" x2="380" y2="945"/>
+                <line x1="1095" y1="915" x2="1095" y2="945"/>
+              </g>
+              <text x="738" y="918" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="22" text-anchor="middle">17,00</text>
+            </svg>
+          </div>
+
+          <div class="handle"><span>⇄</span></div>
+          <input type="range" id="compRange" min="0" max="100" value="50" step="0.5"
+                 aria-label="Posição do comparador: esquerda modelo, direita render">
+        </div>
+
+        <div class="comp-controls">
+          <div>Esquerda: Modelo BIM (Clay + Wireframe) · Direita: Render Final</div>
+          <div class="toggle-group">
+            <button class="btn-toggle" data-pos="100">100% Modelo</button>
+            <button class="btn-toggle active" data-pos="50">50% Dividido</button>
+            <button class="btn-toggle" data-pos="0">100% Render</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PORTFÓLIO ================= -->
+    <section class="container" id="portfolio">
+      <div class="section-title">
+        <span class="eyebrow">[ 03 · PORTFÓLIO ]</span>
+        <h2>Galeria de Projetos & Visualizações</h2>
+        <p>Exteriores, interiores, estudos de geometria e animações — do modelo à apresentação final.</p>
+      </div>
+
+      <div class="filters" id="galleryFilters" role="toolbar" aria-label="Filtrar portfólio">
+        <button class="filter active" data-filter="all">Todos</button>
+        <button class="filter" data-filter="exterior">Exteriores</button>
+        <button class="filter" data-filter="interior">Interiores</button>
+        <button class="filter" data-filter="wire">Wireframe → Render</button>
+        <button class="filter" data-filter="cenografia">Cenografia</button>
+        <button class="filter" data-filter="video">Vídeos</button>
+        <button class="filter" data-filter="prancha">Pranchas</button>
+      </div>
+
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- ================= DOCUMENTAÇÃO ================= -->
+    <section class="band" id="documentacao"><div class="container">
+      <div class="section-title">
+        <span class="eyebrow">[ 04 · DOCUMENTAÇÃO ]</span>
+        <h2>Pranchas Executivas Prontas para Obra</h2>
+        <p>Plantas, forros, cortes e legendas gerados direto do modelo — o mesmo arquivo que alimenta o render.</p>
+      </div>
+
+      <div class="doc-grid">
+        <button class="sheet" id="sheetBtn" aria-label="Ampliar prancha da Casa 01">
+          <img src="assets/prancha-casa01.jpg" alt="Prancha A1 com plantas de piso, planta de forro e corte transversal da Casa 01">
+          <span class="zoom-hint"><svg class="icon"><use href="#i-zoom"/></svg> Ampliar prancha</span>
+        </button>
+
+        <ul class="doc-list">
+          <li>
+            <span class="k">PLANTAS & FORROS</span>
+            <h4>Térreo e pavimento superior</h4>
+            <p>Cotas por eixo, níveis, pé-direito e layout de mobiliário em escala 1:100.</p>
+          </li>
+          <li>
+            <span class="k">CORTES</span>
+            <h4>Corte transversal AA</h4>
+            <p>Escadas, lajes e fundações detalhadas em 1:75 com chamadas de detalhe.</p>
+          </li>
+          <li>
+            <span class="k">PADRÃO REREVIT</span>
+            <h4>Selo, legendas e templates</h4>
+            <p>Legenda de materiais, notas gerais e selo padronizado em todas as folhas.</p>
+          </li>
+        </ul>
+      </div>
+    </div></section>
+
+    <!-- ================= PROCESSO ================= -->
+    <section id="processo">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">[ 05 · PROCESSO ]</span>
+          <h2>Como Trabalhamos</h2>
+          <p>Um fluxo enxuto, do briefing à entrega dos arquivos nativos.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><h4>Briefing técnico</h4><p>Entendemos a demanda, normas aplicáveis, prazos e arquivos de referência (DWG/RVT/PDF).</p></div>
+          <div class="step"><h4>Proposta</h4><p>Escopo fechado por disciplina, cronograma e valores — sem surpresas no meio do caminho.</p></div>
+          <div class="step"><h4>Modelagem & automação</h4><p>Desenvolvimento no Revit com revisões intermediárias e compatibilização entre disciplinas.</p></div>
+          <div class="step"><h4>Entrega</h4><p>Pranchas, modelos RVT, famílias RFA, plugins ou renders — com suporte pós-entrega.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTATO ================= -->
+    <section class="container" id="contato">
+      <div class="contact-card">
+        <div class="section-title" style="margin-bottom: 24px;">
+          <span class="eyebrow">[ 06 · CONTATO ]</span>
+          <h2>Canais de Atendimento</h2>
+          <p>Fale diretamente com a equipe técnica ou envie seus requisitos para cotação formal.</p>
+        </div>
+
+        <div class="tabs-nav" role="tablist">
+          <button class="tab-btn active" role="tab" id="tab-engenheiro" aria-selected="true" aria-controls="panel-engenheiro" data-tab="engenheiro">
+            <svg class="icon"><use href="#i-user"/></svg> Fale com um Engenheiro
+          </button>
+          <button class="tab-btn" role="tab" id="tab-orcamento" aria-selected="false" aria-controls="panel-orcamento" data-tab="orcamento">
+            <svg class="icon"><use href="#i-doc"/></svg> Solicitar Orçamento
+          </button>
+        </div>
+
+        <!-- Aba 1 -->
+        <div class="tab-panel" id="panel-engenheiro" role="tabpanel" aria-labelledby="tab-engenheiro">
+          <div class="email-box">
+            <div>
+              <span class="label-mono">Canal Técnico Oficial</span>
+              <div class="email-address" data-contact="email"></div>
+              <p>Envie memoriais, pranchas em DWG/RVT ou propostas de parceria técnica.</p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a class="btn btn-primary" id="mailBtn" style="padding:10px 18px; font-size:.85rem;">
+                <svg class="icon"><use href="#i-mail"/></svg> Enviar E-mail
+              </a>
+              <button class="btn-toggle" id="btnCopy" style="padding:10px 14px; font-size:.82rem;">Copiar E-mail</button>
+            </div>
+          </div>
+
+          <div class="wa-grid">
+            <div class="wa-box">
+              <div>
+                <span class="label-mono">[ Canal 1 · Projetos ]</span>
+                <h4>Engenharia Elétrica & SPDA</h4>
+                <p>Compatibilização, subestações, pranchas e conformidade NBR 5410/5419.</p>
+                <div class="wa-num" data-contact="wa1-label"></div>
+              </div>
+              <a class="btn btn-wa" target="_blank" rel="noopener" data-wa="wa1" data-msg="Olá, gostaria de falar com o engenheiro sobre projetos.">
+                <svg class="icon"><use href="#i-chat"/></svg> Conversar no WhatsApp
+              </a>
+            </div>
+
+            <div class="wa-box">
+              <div>
+                <span class="label-mono">[ Canal 2 · Automação ]</span>
+                <h4>Plugins Revit & Revit API</h4>
+                <p>Desenvolvimento de ferramentas C#, automações de quantitativos e rotinas.</p>
+                <div class="wa-num" data-contact="wa2-label"></div>
+              </div>
+              <a class="btn btn-wa" target="_blank" rel="noopener" data-wa="wa2" data-msg="Olá, gostaria de falar com o engenheiro sobre plugins Revit.">
+                <svg class="icon"><use href="#i-chat"/></svg> Conversar no WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba 2 -->
+        <div class="tab-panel" id="panel-orcamento" role="tabpanel" aria-labelledby="tab-orcamento" hidden>
+          <form id="quoteForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="clientName">Nome / Empresa *</label>
+                <input type="text" id="clientName" required class="form-control" placeholder="Seu nome ou escritório">
+              </div>
+              <div class="form-group">
+                <label for="clientEmail">E-mail *</label>
+                <input type="email" id="clientEmail" required class="form-control" placeholder="nome@empresa.com.br">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="serviceSelect">Disciplina / Serviço *</label>
+                <select id="serviceSelect" class="form-control">
+                  <option>Projetos Elétricos & SPDA</option>
+                  <option>Modelos & Famílias Revit</option>
+                  <option>Plugins & Revit API</option>
+                  <option>Sistemas (Redes / SDAI / CFTV)</option>
+                  <option>Texturização & Renders 3D</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="clientPhone">WhatsApp para Contato *</label>
+                <input type="tel" id="clientPhone" required class="form-control" placeholder="(11) 90000-0000">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="projectDetails">Resumo da Demanda / Prazos *</label>
+              <textarea id="projectDetails" rows="4" required class="form-control" placeholder="Metragem, tipo de edificação ou a rotina que deseja automatizar..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; padding:14px; font-size:1rem;">
+              Enviar Solicitação pelo WhatsApp
+            </button>
+            <p class="form-note">O pedido abre no WhatsApp já preenchido — basta tocar em enviar.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= LIGHTBOX ================= -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualização ampliada">
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Fechar">✕</button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Próximo">›</button>
+    <figure class="lb-stage">
+      <div id="lbMedia"></div>
+      <figcaption class="lb-caption"><span id="lbCat"></span><strong id="lbTitle"></strong><span id="lbCount"></span></figcaption>
+    </figure>
+  </div>
+
+  <!-- ================= FLOATING ================= -->
+  <div class="floating-widget">
+    <div class="floating-menu" id="floatingMenu">
+      <div class="label-mono" style="margin-bottom:8px; font-weight:700;">Contato rápido</div>
+      <a id="fmMail"><svg class="icon"><use href="#i-mail"/></svg> <span data-contact="email"></span></a>
+      <a target="_blank" rel="noopener" data-wa="wa1"><svg class="icon"><use href="#i-chat"/></svg> WhatsApp 1 (Projetos)</a>
+      <a target="_blank" rel="noopener" data-wa="wa2"><svg class="icon"><use href="#i-code"/></svg> WhatsApp 2 (Plugins)</a>
+    </div>
+    <button class="floating-toggle" id="floatingToggle" aria-expanded="false" aria-controls="floatingMenu">
+      <svg class="icon"><use href="#i-chat"/></svg> <span class="txt">Fale com a Engenharia</span>
+    </button>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo-r.png" alt="">
+        <div>
+          <strong>ReRevit [Soluções para Engenharia]</strong>
+          Tecnologia e precisão em projetos & Revit API
+        </div>
+      </div>
+      <div class="footer-meta">
+        <div data-contact="email"></div>
+        <div>Atendimento em todo o Brasil · © <span id="year"></span> ReRevit</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ====== CONTATOS — edite apenas aqui ====== */
+    const CONTACT = {
+      email: 'tolosa@uol.com.br',
+      wa1:  { number: '5511971583665', label: '+55 (11) 97158-3665' },  // Projetos
+      wa2:  { number: '5511971583665', label: '+55 (11) 97158-3665' },  // Plugins (mesmo número; troque se tiver um segundo)
+      quoteTo: 'wa1'   // canal que recebe o formulário de orçamento
+    };
+
+    const waLink = (key, msg) =>
+      `https://wa.me/${CONTACT[key].number}` + (msg ? `?text=${encodeURIComponent(msg)}` : '');
+
+    // Preenche contatos
+    document.querySelectorAll('[data-contact="email"]').forEach(el => el.textContent = CONTACT.email);
+    document.querySelectorAll('[data-contact="wa1-label"]').forEach(el => el.textContent = CONTACT.wa1.label);
+    document.querySelectorAll('[data-contact="wa2-label"]').forEach(el => el.textContent = CONTACT.wa2.label);
+    document.querySelectorAll('[data-wa]').forEach(a => a.href = waLink(a.dataset.wa, a.dataset.msg));
+    const mailto = `mailto:${CONTACT.email}?subject=${encodeURIComponent('Contato Técnico - ReRevit')}`;
+    document.getElementById('mailBtn').href = mailto;
+    document.getElementById('fmMail').href = mailto;
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Menu mobile
+    const nav = document.getElementById('mainNav');
+    const menuToggle = document.getElementById('menuToggle');
+    menuToggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', open);
+    });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', false);
+    }));
+
+    // Comparador
+    const compBox = document.getElementById('compBox');
+    const compRange = document.getElementById('compRange');
+    const toggles = document.querySelectorAll('.btn-toggle[data-pos]');
+    function setSlider(p) {
+      p = Math.max(0, Math.min(100, Number(p)));
+      compBox.style.setProperty('--pos', p + '%');
+      compRange.value = p;
+      toggles.forEach(b => b.classList.toggle('active', Number(b.dataset.pos) === p));
+    }
+    compRange.addEventListener('input', e => setSlider(e.target.value));
+    toggles.forEach(b => b.addEventListener('click', () => setSlider(b.dataset.pos)));
+
+    // Abas
+    function activateTab(tab) {
+      ['engenheiro', 'orcamento'].forEach(t => {
+        const on = t === tab;
+        document.getElementById('tab-' + t).classList.toggle('active', on);
+        document.getElementById('tab-' + t).setAttribute('aria-selected', on);
+        document.getElementById('panel-' + t).hidden = !on;
+      });
+    }
+    document.querySelectorAll('[data-tab]').forEach(el =>
+      el.addEventListener('click', () => activateTab(el.dataset.tab)));
+
+    // Copiar e-mail
+    document.getElementById('btnCopy').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      try { await navigator.clipboard.writeText(CONTACT.email); }
+      catch {
+        const t = document.createElement('input'); t.value = CONTACT.email;
+        document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
+      }
+      btn.textContent = '✓ Copiado!';
+      setTimeout(() => btn.textContent = 'Copiar E-mail', 2000);
+    });
+
+    // Orçamento → WhatsApp
+    document.getElementById('quoteForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = id => document.getElementById(id).value.trim();
+      const text =
+        `*Solicitação de Orçamento - ReRevit*\n\n` +
+        `*Nome:* ${v('clientName')}\n` +
+        `*E-mail:* ${v('clientEmail')}\n` +
+        `*Serviço:* ${v('serviceSelect')}\n` +
+        `*WhatsApp:* ${v('clientPhone')}\n` +
+        `*Demanda:* ${v('projectDetails')}`;
+      window.open(waLink(CONTACT.quoteTo, text), '_blank', 'noopener');
+    });
+
+    /* ====== PORTFÓLIO — adicione itens aqui ====== */
+    const P = 'assets/portfolio/';
+    const PORTFOLIO = [
+      { src: P + 'chale-pedra.jpg',        cat: 'exterior',   title: 'Chalé em Pedra & Madeira',          size: 'big' },
+      { src: P + 'video-sala.mp4',         cat: 'video',      title: 'Living com Lareira · Animação',     size: 'wide', also: 'interior' },
+      { src: P + 'sala-wire-render.jpg',   cat: 'wire',       title: 'Living · Wireframe → Render', also: 'interior' },
+      { src: P + 'garagem-estrutura.jpg',  cat: 'exterior',   title: 'Edifício-Garagem · Estrutura' },
+      { src: P + 'sala-final.jpg',         cat: 'interior',   title: 'Living em Paleta Terrosa',          size: 'wide' },
+      { src: P + 'cabana-madeira.jpg',     cat: 'exterior',   title: 'Cabana em Madeira Maciça',          size: 'wide' },
+      { src: P + 'video-banheiro.mp4',     cat: 'video',      title: 'Banheiro em Concreto · Animação', also: 'interior' },
+      { src: P + 'sala-clay-render.jpg',   cat: 'wire',       title: 'Living · Clay → Render', also: 'interior' },
+      { src: P + 'templo-painel.jpg',      cat: 'cenografia', title: 'Templo Asteca · Painel em Relevo',  size: 'big' },
+      { src: 'assets/render-casa01.jpg',   cat: 'exterior',   title: 'Casa 01 · Residência em Concreto',  size: 'wide' },
+      { src: P + 'video-cozinha.mp4',      cat: 'video',      title: 'Cozinha Integrada · Animação', also: 'interior' },
+      { src: P + 'sala-noite-wire.jpg',    cat: 'wire',       title: 'Living Noturno · Wireframe → Render', also: 'interior' },
+      { src: P + 'templo-serpente.jpg',    cat: 'cenografia', title: 'Templo Asteca · Serpente Emplumada' },
+      { src: P + 'video-templo.mp4',       cat: 'video',      title: 'Templo Asteca · Animação',          size: 'wide' },
+      { src: 'assets/prancha-casa01.jpg',  cat: 'prancha',    title: 'Casa 01 · Prancha A1 Executiva',    size: 'wide' },
+    ];
+    const CAT_LABEL = { exterior: 'Exterior', interior: 'Interior', wire: 'Wireframe → Render', cenografia: 'Cenografia', video: 'Vídeo', prancha: 'Prancha' };
+    const isVideo = s => /\.mp4$/i.test(s);
+
+    const gallery = document.getElementById('gallery');
+    PORTFOLIO.forEach((it, i) => {
+      const b = document.createElement('button');
+      b.className = 'tile' + (it.size ? ' ' + it.size : '');
+      b.dataset.cat = it.cat; b.dataset.also = it.also || ''; b.dataset.i = i;
+      b.setAttribute('aria-label', `${CAT_LABEL[it.cat]}: ${it.title}`);
+      const media = isVideo(it.src)
+        ? `<video src="${it.src}#t=1.5" muted loop playsinline preload="metadata"></video><span class="play" aria-hidden="true">▶</span>`
+        : `<img src="${it.src}" alt="${it.title}" loading="lazy">`;
+      b.innerHTML = media + `<span class="meta"><span>${CAT_LABEL[it.cat]}</span><strong>${it.title}</strong></span>`;
+      if (isVideo(it.src)) {
+        const v = b.querySelector('video');
+        b.addEventListener('mouseenter', () => v.play().catch(() => {}));
+        b.addEventListener('mouseleave', () => v.pause());
+      }
+      b.addEventListener('click', () => openLightbox(i));
+      gallery.appendChild(b);
+    });
+
+    // Filtros (com contagem)
+    let visible = PORTFOLIO.map((_, i) => i);
+    document.querySelectorAll('.filter').forEach(f => {
+      const n = f.dataset.filter === 'all' ? PORTFOLIO.length : PORTFOLIO.filter(p => p.cat === f.dataset.filter || p.also === f.dataset.filter).length;
+      f.insertAdjacentHTML('beforeend', `<span class="n">${n}</span>`);
+      f.addEventListener('click', () => {
+        document.querySelectorAll('.filter').forEach(x => x.classList.toggle('active', x === f));
+        const cat = f.dataset.filter;
+        visible = [];
+        gallery.querySelectorAll('.tile').forEach(t => {
+          const show = cat === 'all' || t.dataset.cat === cat || t.dataset.also === cat;
+          t.classList.toggle('hide', !show);
+          if (show) { visible.push(+t.dataset.i); t.style.animation = 'none'; t.offsetHeight; t.style.animation = ''; }
+        });
+      });
+    });
+
+    // Lightbox com navegação
+    const lb = document.getElementById('lightbox');
+    const lbMedia = document.getElementById('lbMedia');
+    let cur = 0;
+    function renderLb() {
+      const it = PORTFOLIO[cur];
+      lbMedia.innerHTML = isVideo(it.src)
+        ? `<video src="${it.src}" controls autoplay loop playsinline></video>`
+        : `<img src="${it.src}" alt="${it.title}">`;
+      document.getElementById('lbCat').textContent = CAT_LABEL[it.cat];
+      document.getElementById('lbTitle').textContent = it.title;
+      const pos = visible.indexOf(cur);
+      document.getElementById('lbCount').textContent = `${pos + 1} / ${visible.length}`;
+    }
+    function openLightbox(i) {
+      if (!visible.includes(i)) visible = PORTFOLIO.map((_, k) => k);
+      cur = i; renderLb(); lb.classList.add('open'); document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() { lb.classList.remove('open'); lbMedia.innerHTML = ''; document.body.style.overflow = ''; }
+    function step(d) { const p = visible.indexOf(cur); cur = visible[(p + d + visible.length) % visible.length]; renderLb(); }
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+    document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); step(1); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'ArrowLeft') step(-1);
+    });
+    let tx = 0;
+    lb.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+    lb.addEventListener('touchend', e => { const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50) step(d < 0 ? 1 : -1); });
+
+    // Prancha da seção Documentação abre no lightbox
+    document.getElementById('sheetBtn').addEventListener('click', () =>
+      openLightbox(PORTFOLIO.findIndex(p => p.cat === 'prancha')));
+
+    // Menu flutuante
+    const fMenu = document.getElementById('floatingMenu');
+    const fToggle = document.getElementById('floatingToggle');
+    fToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = fMenu.classList.toggle('open');
+      fToggle.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.floating-widget')) { fMenu.classList.remove('open'); fToggle.setAttribute('aria-expanded', false); }
+    });
+  </script>
+</body>
+</html>
