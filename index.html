@@ -593,6 +593,32 @@
     nav a.nav-plugin.active { color: var(--accent-cyan); }
     @media (max-width: 768px) { nav a.active { box-shadow: none; color: var(--accent-cyan); } }
 
+    /* ---------- Animações: Finalização ---------- */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    #finalizacao .sector-head { position: relative; overflow: hidden; }
+    #finalizacao .sector-head::after {
+      content: ""; position: absolute; inset: -20% 0; pointer-events: none;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,236,190,.10) 48%, rgba(56,189,248,.10) 52%, transparent 62%);
+      transform: translateX(-110%); animation: lightSweep 7s ease-in-out infinite;
+    }
+    @keyframes lightSweep { 0%, 25% { transform: translateX(-110%); } 75%, 100% { transform: translateX(110%); } }
+    #finalizacao .card-icon { animation: iconGlow 3s ease-in-out infinite; }
+    @keyframes iconGlow { 0%, 100% { box-shadow: 0 0 0 rgba(56,189,248,0); } 50% { box-shadow: 0 0 18px rgba(56,189,248,.45); } }
+    #finalizacao .reveal.in .card-tags li { animation: tileIn .45s ease both; }
+    #finalizacao .reveal.in .card-tags li:nth-child(2) { animation-delay: .1s; }
+    #finalizacao .reveal.in .card-tags li:nth-child(3) { animation-delay: .2s; }
+    #finalizacao .reveal.in .card-tags li:nth-child(4) { animation-delay: .3s; }
+    #finalizacao .reveal.in .card-tags li:nth-child(5) { animation-delay: .4s; }
+    #finalizacao .handle span { animation: handlePulse 2.2s ease-out infinite; }
+    @keyframes handlePulse { 0% { box-shadow: 0 0 0 0 rgba(56,189,248,.6); } 100% { box-shadow: 0 0 0 18px rgba(56,189,248,0); } }
+    #finalizacao .tile.reveal { transition-duration: .6s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal.in { opacity: 1; transform: none; }
+      #finalizacao .sector-head::after, #finalizacao .card-icon, #finalizacao .handle span { animation: none; }
+      #finalizacao .reveal.in .card-tags li { animation: none; }
+    }
+
     /* ---------- Setores ---------- */
     .sector-picker { max-width: 1200px; margin: -40px auto 0; padding: 0 24px 72px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .sector-card {
@@ -618,7 +644,7 @@
     }
     .sector-links a:hover { color: var(--bg-dark); background: var(--accent-cyan); border-color: var(--accent-cyan); }
     .render-servico { padding-bottom: 0; }
-    .render-servico .services-grid { max-width: 760px; margin: 0 auto; }
+    .render-servico .services-grid { max-width: 1000px; margin: 0 auto; }
     .sob-medida { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: center; margin-bottom: 40px; }
     .sob-text h3 { font-size: 1.3rem; margin: 4px 0 6px; }
     .sob-text p { color: var(--text-muted); }
@@ -688,6 +714,7 @@
       <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></g></symbol>
       <symbol id="i-net" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/><path d="M2 9a14.5 14.5 0 0 1 20 0"/></g></symbol>
       <symbol id="i-render" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.6"/></g></symbol>
+      <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 10 6-3.5v11L16 14z"/></g></symbol>
       <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></g></symbol>
       <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></g></symbol>
       <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></symbol>
@@ -759,7 +786,7 @@
 
     <!-- ================= SETORES (atalhos) ================= -->
     <div class="sector-picker" aria-label="Setores do site">
-      <a class="sector-card" href="#finalizacao"><span class="n">01</span><span><strong>Finalização de Projetos</strong><span class="d">Texturização, iluminação e renders.</span></span></a>
+      <a class="sector-card" href="#finalizacao"><span class="n">01</span><span><strong>Finalização de Projetos</strong><span class="d">Texturização, iluminação, renders e animações.</span></span></a>
       <a class="sector-card" href="#rerevit"><span class="n">02</span><span><strong>ReRevit Plugin</strong><span class="d">Automação no Revit e ferramentas sob medida.</span></span></a>
       <a class="sector-card" href="#engenharia"><span class="n">03</span><span><strong>Engenharia</strong><span class="d">Elétrica & SPDA, sistemas, famílias e pranchas.</span></span></a>
     </div>
@@ -771,7 +798,7 @@
     <div class="sector-head"><div class="sector-inner">
       <span class="sector-num">SETOR 01</span>
       <h2>Finalização de Projetos</h2>
-      <p>Texturização, iluminação e renderização de projetos — imagens e vídeos fotorrealistas a partir do modelo Revit.</p>
+      <p>Texturização, iluminação, renderização e animação de projetos — imagens e vídeos fotorrealistas a partir do modelo Revit.</p>
       <div class="sector-links" role="navigation" aria-label="Finalização de Projetos"><a href="#render-servico">O que Entregamos</a><a href="#comparador">Modelo → Render</a><a href="#portfolio">Galeria</a></div>
     </div></div>
 
@@ -790,6 +817,20 @@
             <li>Texturização e Renders</li>
             <li>Iluminação Realista</li>
             <li>Entrega de Vídeos e Imagens em até 4K</li>
+          </ul>
+        </article>
+        <article class="card">
+          <div>
+            <div class="card-icon"><svg><use href="#i-video"/></svg></div>
+            <h3>Animações & Vídeos</h3>
+            <p>Animações do projeto a partir do modelo Revit: percursos de câmera pelos ambientes, vistas aéreas e vídeos de apresentação para o cliente e as redes sociais.</p>
+          </div>
+          <ul class="card-tags">
+            <li>Percursos e Tours Virtuais</li>
+            <li>Animações de Câmera e Vistas Aéreas</li>
+            <li>Estudo de Iluminação Dia e Noite</li>
+            <li>Vídeos para Apresentação e Redes Sociais</li>
+            <li>Entrega em até 4K</li>
           </ul>
         </article>
       </div>
@@ -1600,6 +1641,44 @@
     }));
     window.addEventListener('popstate', () => go(location.hash));
     go(location.hash);
+
+    /* ====== ANIMAÇÕES: FINALIZAÇÃO ====== */
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fin = document.getElementById('finalizacao');
+    const revealEls = [
+      ...fin.querySelectorAll('#render-servico .card, #comparador .section-title, #compBox, #comparador .comp-controls, #portfolio .section-title, #galleryFilters')
+    ];
+    fin.querySelectorAll('.tile').forEach((t, i) => { t.classList.add('reveal'); t.style.transitionDelay = (i % 4) * 90 + 'ms'; revealEls.push(t); });
+    revealEls.forEach(el => el.classList.add('reveal'));
+    let compDemoDone = false;
+    function compDemo() {
+      if (compDemoDone || reduceMotion) return;
+      compDemoDone = true;
+      const keys = [50, 82, 18, 50], seg = 900;
+      let t0 = null, stop = false;
+      const cancel = () => stop = true;
+      compRange.addEventListener('pointerdown', cancel, { once: true });
+      compRange.addEventListener('keydown', cancel, { once: true });
+      const ease = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+      function frame(ts) {
+        if (stop) return;
+        if (t0 === null) t0 = ts;
+        const el = ts - t0, k = Math.floor(el / seg);
+        if (k >= keys.length - 1) { setSlider(50); return; }
+        const f = ease((el % seg) / seg);
+        compBox.style.setProperty('--pos', (keys[k] + (keys[k + 1] - keys[k]) * f) + '%');
+        requestAnimationFrame(frame);
+      }
+      setTimeout(() => requestAnimationFrame(frame), 500);
+    }
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const io = new IntersectionObserver(entries => entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in'); io.unobserve(en.target);
+        if (en.target === compBox) compDemo();
+      }), { threshold: 0.15 });
+      revealEls.forEach(el => io.observe(el));
+    } else revealEls.forEach(el => el.classList.add('in'));
 
     // Menu flutuante
     const fMenu = document.getElementById('floatingMenu');
